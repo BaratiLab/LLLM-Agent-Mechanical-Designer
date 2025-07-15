@@ -1,0 +1,40 @@
+def evaluate_structure(node_dict, active_array, area_array, area_id_dict, possible_members, load, supports):
+    """
+    Evaluate structure using FEM.
+    ...
+    """
+    # Pre‐compute a list of your area‐ID keys, in the same order every time
+    area_id_keys = list(area_id_dict.keys())
+
+    # Step 1: Build member_dict automatically
+    member_dict = {}
+    for idx, (active, area_idx) in enumerate(zip(active_array, area_array)):
+        if active == 1:
+            member_name = f"member_{idx+1}"
+            start_node, end_node = possible_members[idx]
+            # instead of str(area_idx) we pull the actual key by index
+            area_id_str = area_id_keys[area_idx]
+            member_dict[member_name] = (start_node, end_node, area_id_str)
+
+    if not member_dict:
+        # No active members -> invalid structure
+        return 1e6, 1e6
+
+    # Step 2: Build possible_members_for_fem
+    possible_members_for_fem = {}
+    for member_name, (start_node, end_node, area_id_str) in member_dict.items():
+        area_value = area_id_dict[area_id_str]
+        possible_members_for_fem[member_name] = (start_node, end_node, area_value)
+
+    # Step 3: FEM call remains the same...
+    try:
+        truss = make_truss(node_dict, possible_members_for_fem, load, supports)
+        res, result_dict = make_result_dict(truss.member_stress(), truss.structure_mass())
+        max_stress = abs(result_dict["max_stress"])
+        total_mass = result_dict["total_mass"]
+    except Exception as e:
+        print(f"FEM error: {e}")
+        max_stress = 1e6
+        total_mass = 1e6
+
+    return total_mass, max_stress
