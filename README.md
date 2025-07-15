@@ -2,14 +2,15 @@
 (changing frequently)
 Note: This repository is under active development and subject to frequent changes.
 
-This repository contains all the code, data, and results necessary to reproduce the experiments and findings presented in our paper on LLLM (Large Language and Lattice Model) Agents for Mechanical Design.
+This repository contains all the RAW code, data, and results as presented in our paper LLLM as a Mechanical Designer.
 
-We aim to make this project easy to understand, run, and extend. Whether you're a researcher, engineer, or enthusiast, you should be able to:
+We aim to make this repo easy to understand, run, and extend. Whether you're a researcher, engineer, or enthusiast, you should be able to:
 
-Run the full design pipeline end-to-end
+  Run the full design pipeline end-to-end
 
-Explore how agentic language models interact with physical simulations
+  Explore how agentic language models interact with physical simulations
 
-Reproduce key figures and tables from the paper
+  Reproduce key figures and tables from the paper
 
-� Everything needed for full reproducibility is included.
+
+Everything needed for full reproducibility is included.
